@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:"ZCOOL KuaiLe";src:url("../../assets/fonts/ZCOOLKuaiLe-Regular.ttf")}body{margin:0}canvas{width:1920px;height:1080px}</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>window.TIMELINE={duration:10,fade:.8,scenes:[]};</script>
+<script src="../../src/core.js"></script><script src="../../src/art.js"></script>
+<script>
+const ctx=document.getElementById('c').getContext('2d');
+window.ready=document.fonts.load('40px "ZCOOL KuaiLe"');
+window.renderAt=(T)=>{
+  const page=Math.floor(T), t=(T%1)*10;
+  bgInside(ctx,t,{});
+  if(page===0){ // 胎儿
+    [0,0.15,0.35,0.55,0.8,1].forEach((g,i)=>{drawSac(ctx,190+i*300,300,135,t);drawFetus(ctx,190+i*300,300,220,t,{g});label(ctx,'g='+g,190+i*300,470,{size:22});});
+    drawEmbryo(ctx,250,780,300,t,{beat:0.5});
+    drawFetus(ctx,700,780,300,t,{g:0.8,thumb:1});
+    drawFetus(ctx,1100,780,300,t,{g:0.8,eyeOpen:1,kick:1});
+    drawFetus(ctx,1500,780,300,t,{g:1,rot:Math.PI*0.9});
+  } else if(page===1){ // 妈妈
+    [0,0.35,0.7,1].forEach((b,i)=>{drawMother(ctx,260+i*420,120,860,b,t);drawMotherArm(ctx,260+i*420,120,860,b);});
+  } else if(page===2){ // 细胞
+    drawEgg(ctx,300,300,170,t,{});
+    drawSperm(ctx,650,300,0.3,2.2,t*6);
+    [0,1,1.5,2,3,4,5,5.5,6].forEach((L,i)=>{drawCleavage(ctx,160+i*200,650,80,L,t);label(ctx,'L'+L,160+i*200,780,{size:20});});
+    drawChromosome(ctx,1000,250,120,'#ff8fb4',0.2);drawChromosome(ctx,1100,250,80,'#6fd9d0',-0.1);
+    drawHelix(ctx,1200,1800,300,60,t);
+    drawEgg(ctx,1600,850,120,t,{pronuclei:0.3,corona:0});
+  } else if(page===3){ // 水果与杂项
+    Object.keys(FRUIT).forEach((k,i)=>{FRUIT[k](ctx,150+(i%6)*300,200+Math.floor(i/6)*280,200);label(ctx,k,150+(i%6)*300,330+Math.floor(i/6)*280,{size:20});});
+    drawLungs(ctx,300,800,300,0.2,t);drawLungs(ctx,650,800,300,1,t);
+    drawNewborn(ctx,1000,800,300,t,{});drawNewborn(ctx,1350,800,300,t,{cry:1});
+    drawKid(ctx,1650,700,300,t,{reach:1});
+    drawHeart(ctx,1800,450,80);drawPlacenta(ctx,1500,500,120,0.3,t);
+  } else if(page===4){
+    drawUterusSection(ctx,700,540,700,t,{squeeze:0});
+    drawFetus(ctx,700,560,420,t,{g:1,rot:Math.PI*0.95});
+    drawUterusSection(ctx,1400,540,700,t,{squeeze:1});
+  }
+  return true;
+};
+</script></body></html>

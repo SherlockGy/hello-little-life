@@ -1,0 +1,20 @@
+# 本地密钥与环境配置
+.env
+.env.*
+!.env.example
+
+# 依赖、缓存与本机工具配置
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.claude/
+
+# 成片与渲染中间文件通过 Release 发布，保留封面与字幕
+output/*
+!output/封面.png
+!output/你好小生命.srt
+
+# 无损混音通过 Release 发布；网页使用 soundtrack.m4a
+assets/soundtrack.wav
